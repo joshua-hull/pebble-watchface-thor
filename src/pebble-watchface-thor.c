@@ -1,49 +1,46 @@
 #include <pebble.h>
 
-static Window *window;
-static TextLayer *text_layer;
+Window *window;
 
-static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
-  text_layer_set_text(text_layer, "Select");
-}
-
-static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
-  text_layer_set_text(text_layer, "Up");
-}
-
-static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
-  text_layer_set_text(text_layer, "Down");
-}
-
-static void click_config_provider(void *context) {
-  window_single_click_subscribe(BUTTON_ID_SELECT, select_click_handler);
-  window_single_click_subscribe(BUTTON_ID_UP, up_click_handler);
-  window_single_click_subscribe(BUTTON_ID_DOWN, down_click_handler);
-}
+TextLayer *hour;
+TextLayer *minute;
 
 static void window_load(Window *window) {
-  Layer *window_layer = window_get_root_layer(window);
-  GRect bounds = layer_get_bounds(window_layer);
+  hour = text_layer_create(GRect(0, 0, 72, 72));
+  text_layer_set_background_color(hour, GColorClear);
+  text_layer_set_text_color(hour, GColorBlack);
+  text_layer_set_text_alignment(hour,GTextAlignmentRight);
+ 
+  layer_add_child(window_get_root_layer(window), (Layer*) hour);
+  text_layer_set_text(hour, "12");
 
-  text_layer = text_layer_create((GRect) { .origin = { 0, 72 }, .size = { bounds.size.w, 20 } });
-  text_layer_set_text(text_layer, "Press a button");
-  text_layer_set_text_alignment(text_layer, GTextAlignmentCenter);
-  layer_add_child(window_layer, text_layer_get_layer(text_layer));
+  GFont bold = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_ROBOTO_COND_BOLD_60));
+  text_layer_set_font(hour, bold);
+
+  minute = text_layer_create(GRect(72, 12, 58, 58));
+  text_layer_set_background_color(minute, GColorClear);
+  text_layer_set_text_color(minute, GColorBlack);
+ 
+  layer_add_child(window_get_root_layer(window), (Layer*) minute);
+  text_layer_set_text(minute, "25");
+
+  GFont light = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_ROBOTO_COND_LIGHT_48));
+  text_layer_set_font(minute, light);
+
 }
 
 static void window_unload(Window *window) {
-  text_layer_destroy(text_layer);
+  text_layer_destroy(hour);
+  text_layer_destroy(minute);
 }
 
 static void init(void) {
   window = window_create();
-  window_set_click_config_provider(window, click_config_provider);
   window_set_window_handlers(window, (WindowHandlers) {
     .load = window_load,
     .unload = window_unload,
   });
-  const bool animated = true;
-  window_stack_push(window, animated);
+  window_stack_push(window, true);
 }
 
 static void deinit(void) {
@@ -52,9 +49,6 @@ static void deinit(void) {
 
 int main(void) {
   init();
-
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "Done initializing, pushed window: %p", window);
-
   app_event_loop();
   deinit();
 }

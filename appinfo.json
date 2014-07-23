@@ -1,17 +1,29 @@
 {
   "uuid": "9f005953-37b6-4b99-b7f8-9856eb4239b2",
-  "shortName": "pebble-watchface-thor",
-  "longName": "pebble-watchface-thor",
-  "companyName": "MakeAwesomeHappen",
+  "shortName": "Thor Watchface",
+  "longName": "Thor Watchface",
+  "companyName": "Joshua Hull",
   "versionCode": 1,
   "versionLabel": "1.0.0",
   "watchapp": {
-    "watchface": false
+    "watchface": true
   },
   "appKeys": {
     "dummy": 0
   },
   "resources": {
-    "media": []
+    "media": [
+      {
+        "type": "font",
+        "name": "ROBOTO_COND_BOLD_60",
+        "file": "fonts/Roboto_Condensed/RobotoCondensed-Bold.ttf"
+      },
+      {
+        "type": "font",
+        "name": "ROBOTO_COND_LIGHT_48",
+        "file": "fonts/Roboto_Condensed/RobotoCondensed-Light.ttf"
+      }
+
+    ]
   }
 }
