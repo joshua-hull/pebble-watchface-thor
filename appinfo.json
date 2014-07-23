@@ -1,0 +1,17 @@
+{
+  "uuid": "9f005953-37b6-4b99-b7f8-9856eb4239b2",
+  "shortName": "pebble-watchface-thor",
+  "longName": "pebble-watchface-thor",
+  "companyName": "MakeAwesomeHappen",
+  "versionCode": 1,
+  "versionLabel": "1.0.0",
+  "watchapp": {
+    "watchface": false
+  },
+  "appKeys": {
+    "dummy": 0
+  },
+  "resources": {
+    "media": []
+  }
+}
